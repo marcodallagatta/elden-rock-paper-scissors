@@ -3,6 +3,7 @@ const choices = ['rock', 'paper', 'scissors'];
 // based on index numbers of the 'choices' variable
 const winners = ['10', '02', '21'];
 let score = '';
+let para = document.querySelector('.result');
 
 function wordToIndex (i) {
 	const input = i.toLowerCase();
@@ -27,28 +28,38 @@ function playRound(playerSelection, computerSelection) {
 	let playerSelect = playerSelection.toLowerCase();
 
 	if (!choices.includes(playerSelect)) {
-		console.log(`Your selection "${playerSelect}" wasn't valid.\nPlease choose either "rock", "paper" or "scissors"\n`);
+		let message = `Your selection "${playerSelect}" wasn't valid.\nPlease choose either "rock", "paper" or "scissors"\n`;
+		console.log(message);
+		para.innerHTML += message + '<br>';
 		return false;
 	}
 
 	const challenge = `${wordToIndex(playerSelect)}${wordToIndex(computerSelection)}`;
 
 	if (winners.includes(challenge)) {
-		console.log(`You won the round: ${playerSelect} beats ${computerSelection}\n`);
+		let message = `You won the round: ${playerSelect} beats ${computerSelection}\n`;
+		console.log(message);
+		para.innerHTML += message + '<br>';
 		score += 'W';
 		console.log(`The score is: ${score}`);
 	} else if (playerSelect === computerSelection) {
-		console.log(`It's a tie: you've both choosen ${playerSelect}\n`);
+		let message = `It's a tie: you've both choosen ${playerSelect}\n`;
+		console.log(message);
+		para.innerHTML += message + '<br>';
 		score += 'T';
 		console.log(`The score is: ${score}`);
 	} else {
-		console.log(`You lost the roud: ${playerSelect} is beaten by ${computerSelection}\n`);
+		let message = `You lost the round: ${playerSelect} is beaten by ${computerSelection}\n`;
+		console.log(message);
+		para.innerHTML += message + '<br>';
 		score += 'L';
 		console.log(`The score is: ${score}`);
 	}
 }
 
 function game(rounds) {
+	para.textContent = '';
+
 	let roundRes;
 
 	for (let i = 0; i < rounds; i++) {
@@ -76,11 +87,17 @@ function game(rounds) {
 	}
 
 	if (scoreWon === scoreLost) {
-		console.log(`It's a tie! You've won ${scoreWon} rounds and lost ${scoreLost} rounds.`)
+		message = `It's a tie! You've won ${scoreWon} rounds and lost ${scoreLost} rounds.`;
+		console.log(message);
+		para.innerHTML += '<br>' + message;
 	} else if (scoreWon > scoreLost) {
-		console.log(`YOU WIN! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreLost} ties.`)
+		message = `YOU WIN! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreLost} ties.`;
+		console.log(message);
+		para.innerHTML += '<br>' + message;
 	} else {
-		console.log(`You Lost :( You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreLost} ties.`)
+		message = `You Lost :( You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreLost} ties.`;
+		console.log(message);
+		para.innerHTML += '<br>' + message;
 	}
 
 }
