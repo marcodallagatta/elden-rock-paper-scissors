@@ -81,21 +81,21 @@ function game(rounds) {
 			scoreWon += 1;
 		} else if (scoreSum[i] === 'L') {
 			scoreLost += 1;
-		} else {
+		} else if (scoreSum[i] === 'T') {
 			scoreTie += 1;
 		}
 	}
 
 	if (scoreWon === scoreLost) {
-		message = `It's a tie! You've won ${scoreWon} rounds and lost ${scoreLost} rounds.`;
+		message = `It's a tie! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
 		console.log(message);
 		para.innerHTML += '<br>' + message;
 	} else if (scoreWon > scoreLost) {
-		message = `YOU WIN! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreLost} ties.`;
+		message = `YOU WIN! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
 		console.log(message);
 		para.innerHTML += '<br>' + message;
 	} else {
-		message = `You Lost :( You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreLost} ties.`;
+		message = `You Lost :( You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
 		console.log(message);
 		para.innerHTML += '<br>' + message;
 	}
