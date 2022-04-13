@@ -30,7 +30,7 @@ function playRound(playerSelection, computerSelection) {
 	if (!choices.includes(playerSelect)) {
 		let message = `Your selection "${playerSelect}" wasn't valid.\nPlease choose either "rock", "paper" or "scissors"\n`;
 		console.log(message);
-		para.innerHTML += message + '<br>';
+		alert(message);
 		return false;
 	}
 
