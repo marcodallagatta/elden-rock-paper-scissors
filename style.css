@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+    margin-top: 50px;
+}
+
+#cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.rock {
+    height: 160px;
+    padding-top: 20px;
+}
+
+.scissors {
+    height: 180px;
+    padding-top: 10px;
+}
+
+#cards img {
+    transition: all .1s ease-in-out;
+    object-fit: cover;
+}
+
+#cards img:hover {
+    transform: scale(1.2);
+    
+}
