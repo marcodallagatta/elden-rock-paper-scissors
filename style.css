@@ -25,7 +25,7 @@ body {
     object-fit: cover;
 }
 
-#cards img:hover {
-    transform: scale(1.2);
-    
+@keyframes card-pulse {
+    0%, 10%, 90%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
 }

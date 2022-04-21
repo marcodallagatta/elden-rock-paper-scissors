@@ -1,3 +1,6 @@
+const rockElem = document.querySelector('.rock');
+const paperElem = document.querySelector('.paper');
+const scissorsElem = document.querySelector('.scissors');
 const choices = ['rock', 'paper', 'scissors'];
 // possible winning combinations for the first value
 // based on index numbers of the 'choices' variable
@@ -24,15 +27,16 @@ function computerPlay() {
 	return choices[Math.floor(Math.random() * 3)];
 }
 
+function cardAnimationRoulette(duration = '.6', rounds = '5') {
+	rockElem.style.animation = `card-pulse ${duration}s ${rounds}`;
+	paperElem.style.animation = `card-pulse ${duration}s .2s ${rounds}`;
+	scissorsElem.style.animation = `card-pulse ${duration}s .4s ${rounds}`;
+}
+
+cardAnimationRoulette();
+
 function playRound(playerSelection, computerSelection) {
 	let playerSelect = playerSelection.toLowerCase();
-
-	if (!choices.includes(playerSelect)) {
-		let message = `Your selection "${playerSelect}" wasn't valid.\nPlease choose either "rock", "paper" or "scissors"\n`;
-		console.log(message);
-		alert(message);
-		return false;
-	}
 
 	const challenge = `${wordToIndex(playerSelect)}${wordToIndex(computerSelection)}`;
 
