@@ -38,6 +38,21 @@ header {
     50% { transform: scale(1.2); }
 }
 
+@keyframes card-zoom-in {
+    0%, 10% { transform: scale(1); }
+    100% { transform: scale(1.2); }
+}
+
+@keyframes card-zoom-out {
+    0%, 10% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.result {
+    text-align: center;
+    padding: 20px 0;
+}
+
 footer {
     background: grey;
     color: white;

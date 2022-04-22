@@ -1,6 +1,12 @@
+// todo
+// highlight winning pc card
+// 
+
+
 const rockElem = document.querySelector('.rock');
 const paperElem = document.querySelector('.paper');
 const scissorsElem = document.querySelector('.scissors');
+const allElem = document.querySelectorAll('.card');
 const choices = ['Bleed', 'Comet', 'Mimic'];
 // possible winning combinations for the first value
 // based on index numbers of the 'choices' variable
@@ -15,21 +21,22 @@ function computerPlay() {
 }
 
 //// Graphic, animation
-function cardAnimationRoulette(duration = '0.6', delay = '0.4', rounds = '5') {
+function cardAnimationRoulette(rounds = 5, duration = 0.6, delay = 0.4) {
 	rockElem.style.animation = `card-pulse ${duration}s ${rounds}`;
 	paperElem.style.animation = `card-pulse ${duration}s ${delay/2}s ${rounds}`;
 	scissorsElem.style.animation = `card-pulse ${duration}s ${delay}s ${rounds}`;
-	setTimeout( function() {
-		removeCardAnimation();
-	}, (duration * rounds + delay) * 1000);
+	const animLength = (delay + (duration * rounds)) * 1000;
+	// setTimeout( function() {
+	// 	allElem.forEach(item => item.style.animation = "");
+	// }, animLength);
+	return animLength;
 }
-function removeCardAnimation() {
-	rockElem.style.animation = "";
-	paperElem.style.animation = "";
-	scissorsElem.style.animation = "";
+
+function cardSinglePulseOn(event) {
+	event.target.style.animation = 'card-zoom-in 0.6s forwards';
 }
-function cardSinglePulse(event) {
-	event.target.style.animation = 'card-pulse 0.6s 1';
+function cardSinglePulseOff(event) {
+	event.target.style.animation = 'card-zoom-out 0.6s';
 	setTimeout(function() {
 		event.target.style.animation = "";
 	}, 600);
@@ -37,71 +44,75 @@ function cardSinglePulse(event) {
 
 //// Event listening
 function addCardsListeners() {
-	rockElem.addEventListener('mouseover', function(event) {
-		cardSinglePulse(event);
+	addCardMouseOver();
+	allElem.forEach(item => {
+		item.addEventListener('mouseleave', item => {
+			cardSinglePulseOff(item);
+		})
 	});
-	rockElem.addEventListener('click', function(event) {
-		userChoice(event);
+	allElem.forEach(item => {
+		item.addEventListener('click', item => {
+			playRound(0);
+		})
 	});
-	paperElem.addEventListener('mouseover', function(event) {
-		cardSinglePulse(event);
+}
+function addCardMouseOver() {
+	allElem.forEach(item => {
+		item.addEventListener('mouseover', item => {
+			cardSinglePulseOn(item);
+		})
 	});
-	paperElem.addEventListener('click', function(event) {
-		userChoice(event);
+}
+// separated to stop glitching animation on mouseover while doing the 'scrolling animation' in cardAnimationRoulette()
+function removeCardMouseOver() {
+	allElem.forEach(item => {
+		item.removeEventListener('mouseover', item => {
+			cardSinglePulseOn(item);
+		})
 	});
-	scissorsElem.addEventListener('mouseover', function(event) {
-		cardSinglePulse(event);
-	});
-	scissorsElem.addEventListener('click', function(event) {
-		userChoice(event);
+}
+
+// clears the event listeners to avoid interrupting animations
+// and for game over
+function removeElemListeners() {
+	allElem.forEach(item => {
+		item.replaceWith(item.cloneNode(true));
 	});
 }
 addCardsListeners();
 
 //// Game routine
 function playRound(playerSelection) {
-	const computerSelection = computerPlay();
-	const challenge = `${playerSelection}${computerSelection}`;
-	console.log(`game is ${challenge}`);
-	if (winners.includes(challenge)) {
-		let message = `You won the round: ${playerSelection} beats ${computerSelection}\n`;
-		console.log(message);
-		para.innerHTML += message + '<br>';
-		score += 'W';
-		console.log(`The score is: ${score}`);
-	} else if (playerSelection === computerSelection) {
-		let message = `It's a tie: you've both choosen ${playerSelection}\n`;
-		console.log(message);
-		para.innerHTML += message + '<br>';
-		score += 'T';
-		console.log(`The score is: ${score}`);
-	} else {
-		let message = `You lost the round: ${playerSelection} is beaten by ${computerSelection}\n`;
-		console.log(message);
-		para.innerHTML += message + '<br>';
-		score += 'L';
-		console.log(`The score is: ${score}`);
-	}
+	let outputLength = cardAnimationRoulette(3);
+	para.textContent = '';
+	setTimeout( function () {
+		const computerSelection = computerPlay();
+		const challenge = `${playerSelection}${computerSelection}`;
+		console.log(`game is ${challenge}`);
+		if (winners.includes(challenge)) {
+			let message = `You won the round: ${playerSelection} beats ${computerSelection}\n`;
+			para.innerHTML = message + '<br>';
+			score += 'W';
+		} else if (playerSelection === computerSelection) {
+			let message = `It's a tie: you've both choosen ${playerSelection}\n`;
+			para.innerHTML = message + '<br>';
+			score += 'T';
+		} else {
+			let message = `You lost the round: ${playerSelection} is beaten by ${computerSelection}\n`;
+			para.innerHTML = message + '<br>';
+			score += 'L';
+		}
+		if (score.length > 1) { calcWinner(score); }
+	}, outputLength);
 }
 
-function game(rounds) {
-	para.textContent = '';
-
-	let roundRes;
-
-	for (let i = 0; i < rounds; i++) {
-		roundRes = playRound( prompt("Rock, Paper or Scissors?"),computerPlay());
-		if (roundRes === false) {
-			i--;
-		}
-		console.log(roundRes);
-	}
+function calcWinner(score) {
+	removeElemListeners();
 
 	let scoreSum = score.split('');
 	let scoreWon = 0;
 	let scoreLost = 0;
 	let scoreTie = 0;
-
 	// calculate winning results
 	for (let i = 0; i < scoreSum.length; i++) {
 		if (scoreSum[i] === 'W') {
@@ -112,19 +123,18 @@ function game(rounds) {
 			scoreTie += 1;
 		}
 	}
+	announceWinner(scoreWon, scoreLost, scoreTie);
+}
 
+function announceWinner(scoreWon, scoreLost, scoreTie) {
 	if (scoreWon === scoreLost) {
 		message = `It's a tie! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
-		console.log(message);
-		para.innerHTML += '<br>' + message;
+		para.innerHTML = '<br>' + message;
 	} else if (scoreWon > scoreLost) {
 		message = `YOU WIN! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
-		console.log(message);
-		para.innerHTML += '<br>' + message;
+		para.innerHTML = '<br>' + message;
 	} else {
 		message = `You Lost :( You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
-		console.log(message);
-		para.innerHTML += '<br>' + message;
+		para.innerHTML = '<br>' + message;
 	}
-
 }
