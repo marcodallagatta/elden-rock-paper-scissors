@@ -1,59 +1,82 @@
 const rockElem = document.querySelector('.rock');
 const paperElem = document.querySelector('.paper');
 const scissorsElem = document.querySelector('.scissors');
-const choices = ['rock', 'paper', 'scissors'];
+const choices = ['Bleed', 'Comet', 'Mimic'];
 // possible winning combinations for the first value
 // based on index numbers of the 'choices' variable
+// rock/bleed = 0, paper/comet = 1, scissors/mimic = 2
 const winners = ['10', '02', '21'];
 let score = '';
 let para = document.querySelector('.result');
 
-function wordToIndex (i) {
-	const input = i.toLowerCase();
-	switch (i) {
-		case 'rock':
-			return '0';
-			break;
-		case 'paper':
-			return '1';
-			break;
-		case 'scissors':
-			return '2';
-			break;
-	}
-}
-
+//// RPS logic
 function computerPlay() {
-	return choices[Math.floor(Math.random() * 3)];
+	return Math.floor(Math.random() * 3);
 }
 
-function cardAnimationRoulette(duration = '.6', rounds = '5') {
+//// Graphic, animation
+function cardAnimationRoulette(duration = '0.6', delay = '0.4', rounds = '5') {
 	rockElem.style.animation = `card-pulse ${duration}s ${rounds}`;
-	paperElem.style.animation = `card-pulse ${duration}s .2s ${rounds}`;
-	scissorsElem.style.animation = `card-pulse ${duration}s .4s ${rounds}`;
+	paperElem.style.animation = `card-pulse ${duration}s ${delay/2}s ${rounds}`;
+	scissorsElem.style.animation = `card-pulse ${duration}s ${delay}s ${rounds}`;
+	setTimeout( function() {
+		removeCardAnimation();
+	}, (duration * rounds + delay) * 1000);
+}
+function removeCardAnimation() {
+	rockElem.style.animation = "";
+	paperElem.style.animation = "";
+	scissorsElem.style.animation = "";
+}
+function cardSinglePulse(event) {
+	event.target.style.animation = 'card-pulse 0.6s 1';
+	setTimeout(function() {
+		event.target.style.animation = "";
+	}, 600);
 }
 
-cardAnimationRoulette();
+//// Event listening
+function addCardsListeners() {
+	rockElem.addEventListener('mouseover', function(event) {
+		cardSinglePulse(event);
+	});
+	rockElem.addEventListener('click', function(event) {
+		userChoice(event);
+	});
+	paperElem.addEventListener('mouseover', function(event) {
+		cardSinglePulse(event);
+	});
+	paperElem.addEventListener('click', function(event) {
+		userChoice(event);
+	});
+	scissorsElem.addEventListener('mouseover', function(event) {
+		cardSinglePulse(event);
+	});
+	scissorsElem.addEventListener('click', function(event) {
+		userChoice(event);
+	});
+}
+addCardsListeners();
 
-function playRound(playerSelection, computerSelection) {
-	let playerSelect = playerSelection.toLowerCase();
-
-	const challenge = `${wordToIndex(playerSelect)}${wordToIndex(computerSelection)}`;
-
+//// Game routine
+function playRound(playerSelection) {
+	const computerSelection = computerPlay();
+	const challenge = `${playerSelection}${computerSelection}`;
+	console.log(`game is ${challenge}`);
 	if (winners.includes(challenge)) {
-		let message = `You won the round: ${playerSelect} beats ${computerSelection}\n`;
+		let message = `You won the round: ${playerSelection} beats ${computerSelection}\n`;
 		console.log(message);
 		para.innerHTML += message + '<br>';
 		score += 'W';
 		console.log(`The score is: ${score}`);
-	} else if (playerSelect === computerSelection) {
-		let message = `It's a tie: you've both choosen ${playerSelect}\n`;
+	} else if (playerSelection === computerSelection) {
+		let message = `It's a tie: you've both choosen ${playerSelection}\n`;
 		console.log(message);
 		para.innerHTML += message + '<br>';
 		score += 'T';
 		console.log(`The score is: ${score}`);
 	} else {
-		let message = `You lost the round: ${playerSelect} is beaten by ${computerSelection}\n`;
+		let message = `You lost the round: ${playerSelection} is beaten by ${computerSelection}\n`;
 		console.log(message);
 		para.innerHTML += message + '<br>';
 		score += 'L';
