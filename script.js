@@ -1,8 +1,3 @@
-// todo
-// highlight winning pc card
-// 
-
-
 const rockElem = document.querySelector('.rock');
 const paperElem = document.querySelector('.paper');
 const scissorsElem = document.querySelector('.scissors');
@@ -50,9 +45,12 @@ function addCardsListeners() {
 			cardSinglePulseOff(item);
 		})
 	});
-	allElem.forEach(item => {
+	allElem.forEach( (item, index) => {
 		item.addEventListener('click', item => {
-			playRound(0);
+		allElem.forEach(item => {
+			item.classList.remove('enemychoice', 'mychoice', 'samechoice');
+		});
+		playRound(index);
 		})
 	});
 }
@@ -83,27 +81,36 @@ addCardsListeners();
 
 //// Game routine
 function playRound(playerSelection) {
-	let outputLength = cardAnimationRoulette(3);
-	para.textContent = '';
+	// let outputLength = cardAnimationRoulette(3);
+	console.log(playerSelection);
 	setTimeout( function () {
 		const computerSelection = computerPlay();
+		if (playerSelection === computerSelection) {
+			allElem[computerSelection].classList.remove('mychoice')
+			allElem[computerSelection].classList.add('samechoice');
+		} else {
+			allElem[computerSelection].classList.add('enemychoice');
+			allElem[playerSelection].classList.add('mychoice');
+			// cardSinglePulseOn(allElem[computerPlay]);
+		}
 		const challenge = `${playerSelection}${computerSelection}`;
 		console.log(`game is ${challenge}`);
 		if (winners.includes(challenge)) {
-			let message = `You won the round: ${playerSelection} beats ${computerSelection}\n`;
-			para.innerHTML = message + '<br>';
+			let message = `You won round ${score.length+1}: ${choices[playerSelection]} beats ${choices[computerSelection]}\n`;
+			para.textContent = message;
 			score += 'W';
 		} else if (playerSelection === computerSelection) {
-			let message = `It's a tie: you've both choosen ${playerSelection}\n`;
-			para.innerHTML = message + '<br>';
+			let message = `Round ${score.length+1} is a tie: you've both choosen ${choices[playerSelection]}\n`;
+			para.textContent = message;
 			score += 'T';
 		} else {
-			let message = `You lost the round: ${playerSelection} is beaten by ${computerSelection}\n`;
-			para.innerHTML = message + '<br>';
+			let message = `You lost round ${score.length+1}: ${choices[playerSelection]} is beaten by ${choices[computerSelection]}\n`;
+			para.textContent = message;
 			score += 'L';
 		}
-		if (score.length > 1) { calcWinner(score); }
-	}, outputLength);
+		if (score.length >= 5) { calcWinner(score); }
+	// }, outputLength);
+	}, 100);
 }
 
 function calcWinner(score) {
@@ -129,12 +136,12 @@ function calcWinner(score) {
 function announceWinner(scoreWon, scoreLost, scoreTie) {
 	if (scoreWon === scoreLost) {
 		message = `It's a tie! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
-		para.innerHTML = '<br>' + message;
+		para.innerHTML = message;
 	} else if (scoreWon > scoreLost) {
 		message = `YOU WIN! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
-		para.innerHTML = '<br>' + message;
+		para.innerHTML = message;
 	} else {
 		message = `You Lost :( You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
-		para.innerHTML = '<br>' + message;
+		para.innerHTML = message;
 	}
 }

@@ -4,7 +4,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Rock Paper Scissors</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+	</style>
 	<link rel="stylesheet" href="style.css">
+	
 </head>
 <body>
 	<header>
@@ -12,16 +16,27 @@
 		<h2>An Elden Ring-esque take on Rock, Paper, Scissors</h2>
 	</header>
 	<div class="explanation">
-
+		<p>The game plays like regular Rock, Paper, Scissors, with the exception that those object have been replace with way better ones.</p>
+		<div class="legend">
+			<div>
+				<img src="pictures/seppuku.png" alt="rock" draggable="false">
+				<span>beats</span><img src="pictures/mimic.png" alt="scissors" draggable="false">
+			</div>
+			<div>
+				<img src="pictures/comet.png" alt="paper" draggable="false"><span>beats</span><img src="pictures/seppuku.png" alt="rock" draggable="false">
+			</div>
+			<div>
+				<img src="pictures/mimic.png" alt="scissors" draggable="false"><span>beats</span><img src="pictures/comet.png" alt="paper" draggable="false">
+			</div>
+		</div>
+		<p>Time to git gud :cringe:</p>
 	</div>
 	<div id="cards">
 		<img src="pictures/seppuku.png" class="card rock" alt="rock" draggable="false">
 		<img src="pictures/comet.png" class="card paper" alt="paper" draggable="false">
 		<img src="pictures/mimic.png" class="card scissors" alt="scissors" draggable="false">
 	</div>
-	<div class='result'>
-
-	</div>
+	<div class='result'>Just click on the cards to continue, and the best of 5 turns will be the winner!</div>
 	<footer>
 		<a href="https://en.bandainamcoent.eu/elden-ring/elden-ring" target="blank">Trademark BANDAI NAMCO and From Software 2022</a>
 	</footer>
