@@ -1,3 +1,8 @@
+// todo
+// optimize mobile
+// highlight winning paragraph after game is over
+// restart button?
+
 const rockElem = document.querySelector('.rock');
 const paperElem = document.querySelector('.paper');
 const scissorsElem = document.querySelector('.scissors');
@@ -137,11 +142,14 @@ function announceWinner(scoreWon, scoreLost, scoreTie) {
 	if (scoreWon === scoreLost) {
 		message = `It's a tie! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
 		para.innerHTML = message;
+		para.classList.add('tieMessage');
 	} else if (scoreWon > scoreLost) {
 		message = `YOU WIN! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
 		para.innerHTML = message;
+		para.classList.add('winMessage');
 	} else {
 		message = `You Lost :( You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
 		para.innerHTML = message;
+		para.classList.add('loseMessage');
 	}
 }

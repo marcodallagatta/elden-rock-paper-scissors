@@ -44,7 +44,7 @@ h2 {
 }
 
 .legend {
-    padding: 20px 0;
+    padding: 25px 0;
 }
 
 .explanation img {
@@ -65,12 +65,6 @@ h2 {
     padding: 50px 0;
 }
 
-.rock,
-.paper,
-.scissors {
-
-}
-
 .rock {
     height: 160px;
     padding-top: 20px;
@@ -89,7 +83,7 @@ h2 {
     filter: drop-shadow(0 5px 30px #faba29);
 }
 .samechoice {
-    filter: drop-shadow(0 5px 30px rgb(158, 182, 167));
+    filter: drop-shadow(0 5px 30px #9eb6a7);
 }
 
 #cards img {
@@ -114,7 +108,7 @@ h2 {
 
 .result {
     text-align: center;
-    padding: 25px 0 40px 0;
+    padding: 25px 0 60px 0;
     color: white;
 }
 
@@ -128,4 +122,19 @@ footer a {
     text-decoration: none;
     color: #808060;
     font-size: .8em;
+}
+
+.loseMessage {
+    color: #be6048;
+    font-weight: bold;
+}
+
+.winMessage {
+    color: #faba29;
+    font-weight: bold;
+}
+
+.tieMessage {
+    color: #9eb6a7;
+    font-weight: bold;
 }
