@@ -5,15 +5,11 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-* {
-    /* border: 1px solid rgba(141, 16, 16, 0.164); */
-}
-
 header {
     display: flex-column;
     justify-content: center;
     text-align: center;
-    padding: 30px 0;
+    padding: 30px 10px;
     background: #353b33;
     color: #faba29;
     font-family:'MedievalSharp', cursive;
@@ -32,14 +28,14 @@ h2 {
 .explanation {
     text-align: center;
     color: white;
-    padding: 30px 0;
+    padding: 30px 10px;
     background: #808060;
     display: flex-column;
     align-items: center;
 }
 
 .explanation p {
-    width: 500px;
+    max-width: 500px;
     margin: 0 auto 0 auto;
 }
 
@@ -48,7 +44,7 @@ h2 {
 }
 
 .explanation img {
-    width: 60px;
+    max-width: 60px;
     object-fit: cover;
 }
 
@@ -62,7 +58,7 @@ h2 {
     display: flex;
     justify-content: center;
     gap: 20px;
-    padding: 50px 0;
+    padding: 50px 10px;
 }
 
 .rock {
@@ -75,6 +71,21 @@ h2 {
     padding-top: 10px;
 }
 
+#cards img {
+    transition: all .1s ease-in-out;
+    object-fit: cover;
+}
+
+@media only screen and (max-width:1000px) { /* sotto gli 800px */
+	.rock,
+    .scissors,
+    .paper {
+        width: 25%;
+        height: auto;
+        padding: 0;
+    }
+}
+
 .enemychoice {
     filter: drop-shadow(0 5px 30px #be6048);
 }
@@ -84,11 +95,6 @@ h2 {
 }
 .samechoice {
     filter: drop-shadow(0 5px 30px #9eb6a7);
-}
-
-#cards img {
-    transition: all .1s ease-in-out;
-    object-fit: cover;
 }
 
 @keyframes card-pulse {
@@ -108,7 +114,7 @@ h2 {
 
 .result {
     text-align: center;
-    padding: 25px 0 60px 0;
+    padding: 25px 10px 60px 10px;
     color: white;
 }
 
