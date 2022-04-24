@@ -1,37 +1,38 @@
-// todo
-// optimize mobile
-// highlight winning paragraph after game is over
-// restart button?
-
+////////////
+// selectors and initialization
+////////////
 const rockElem = document.querySelector('.rock');
 const paperElem = document.querySelector('.paper');
 const scissorsElem = document.querySelector('.scissors');
 const allElem = document.querySelectorAll('.card');
+let para = document.querySelector('.result');
 const choices = ['Bleed', 'Comet', 'Mimic'];
+let score = '';
 // possible winning combinations for the first value
 // based on index numbers of the 'choices' variable
 // rock/bleed = 0, paper/comet = 1, scissors/mimic = 2
 const winners = ['10', '02', '21'];
-let score = '';
-let para = document.querySelector('.result');
 
-//// RPS logic
+////////////
+// RPS logic
+////////////
 function computerPlay() {
 	return Math.floor(Math.random() * 3);
 }
 
-//// Graphic, animation
+////////////
+// Graphic, animation
+////////////
 function cardAnimationRoulette(rounds = 5, duration = 0.6, delay = 0.4) {
 	rockElem.style.animation = `card-pulse ${duration}s ${rounds}`;
 	paperElem.style.animation = `card-pulse ${duration}s ${delay/2}s ${rounds}`;
 	scissorsElem.style.animation = `card-pulse ${duration}s ${delay}s ${rounds}`;
 	const animLength = (delay + (duration * rounds)) * 1000;
-	// setTimeout( function() {
-	// 	allElem.forEach(item => item.style.animation = "");
-	// }, animLength);
+	setTimeout( function() {
+		allElem.forEach(item => item.style.animation = "");
+	}, animLength);
 	return animLength;
 }
-
 function cardSinglePulseOn(event) {
 	event.target.style.animation = 'card-zoom-in 0.6s forwards';
 }
@@ -42,7 +43,9 @@ function cardSinglePulseOff(event) {
 	}, 600);
 }
 
-//// Event listening
+////////////
+// Event listeners
+////////////
 function addCardsListeners() {
 	addCardMouseOver();
 	allElem.forEach(item => {
@@ -66,7 +69,7 @@ function addCardMouseOver() {
 		})
 	});
 }
-// separated to stop glitching animation on mouseover while doing the 'scrolling animation' in cardAnimationRoulette()
+// separated some listeners to stop glitching animation on mouseover while doing the 'scrolling animation' in cardAnimationRoulette()
 function removeCardMouseOver() {
 	allElem.forEach(item => {
 		item.removeEventListener('mouseover', item => {
@@ -74,7 +77,6 @@ function removeCardMouseOver() {
 		})
 	});
 }
-
 // clears the event listeners to avoid interrupting animations
 // and for game over
 function removeElemListeners() {
@@ -82,11 +84,14 @@ function removeElemListeners() {
 		item.replaceWith(item.cloneNode(true));
 	});
 }
+// finally execute the listeners
 addCardsListeners();
 
-//// Game routine
+////////////
+// Game routine
+////////////
 function playRound(playerSelection) {
-	// let outputLength = cardAnimationRoulette(3);
+	let outputLength = cardAnimationRoulette(3);
 	console.log(playerSelection);
 	setTimeout( function () {
 		const computerSelection = computerPlay();
@@ -96,7 +101,7 @@ function playRound(playerSelection) {
 		} else {
 			allElem[computerSelection].classList.add('enemychoice');
 			allElem[playerSelection].classList.add('mychoice');
-			// cardSinglePulseOn(allElem[computerPlay]);
+			cardSinglePulseOn(allElem[computerPlay]);
 		}
 		const challenge = `${playerSelection}${computerSelection}`;
 		console.log(`game is ${challenge}`);
@@ -117,10 +122,8 @@ function playRound(playerSelection) {
 	// }, outputLength);
 	}, 100);
 }
-
 function calcWinner(score) {
 	removeElemListeners();
-
 	let scoreSum = score.split('');
 	let scoreWon = 0;
 	let scoreLost = 0;
@@ -137,7 +140,6 @@ function calcWinner(score) {
 	}
 	announceWinner(scoreWon, scoreLost, scoreTie);
 }
-
 function announceWinner(scoreWon, scoreLost, scoreTie) {
 	if (scoreWon === scoreLost) {
 		message = `It's a tie! You've won ${scoreWon} rounds and lost ${scoreLost} rounds, with ${scoreTie} ties.`;
