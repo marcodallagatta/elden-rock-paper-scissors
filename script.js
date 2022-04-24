@@ -101,16 +101,16 @@ function playRound(playerSelection) {
 		const challenge = `${playerSelection}${computerSelection}`;
 		console.log(`game is ${challenge}`);
 		if (winners.includes(challenge)) {
-			let message = `You won round ${score.length+1}: ${choices[playerSelection]} beats ${choices[computerSelection]}\n`;
-			para.textContent = message;
+			let message = `You won round ${score.length+1}<br>${choices[playerSelection]} beats ${choices[computerSelection]}`;
+			para.innerHTML = message;
 			score += 'W';
 		} else if (playerSelection === computerSelection) {
-			let message = `Round ${score.length+1} is a tie: you've both choosen ${choices[playerSelection]}\n`;
-			para.textContent = message;
+			let message = `Round ${score.length+1} is a tie<br>You've both choosen ${choices[playerSelection]}`;
+			para.innerHTML = message;
 			score += 'T';
 		} else {
-			let message = `You lost round ${score.length+1}: ${choices[playerSelection]} is beaten by ${choices[computerSelection]}\n`;
-			para.textContent = message;
+			let message = `You lost round ${score.length+1}<br>${choices[playerSelection]} is beaten by ${choices[computerSelection]}`;
+			para.innerHTML = message;
 			score += 'L';
 		}
 		if (score.length >= 5) { calcWinner(score); }
