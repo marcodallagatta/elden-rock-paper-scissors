@@ -91,7 +91,7 @@ addCardsListeners();
 // Game routine
 ////////////
 function playRound(playerSelection) {
-	let outputLength = cardAnimationRoulette(3);
+	let outputLength = cardAnimationRoulette(1);
 	console.log(playerSelection);
 	setTimeout( function () {
 		const computerSelection = computerPlay();
@@ -101,7 +101,6 @@ function playRound(playerSelection) {
 		} else {
 			allElem[computerSelection].classList.add('enemychoice');
 			allElem[playerSelection].classList.add('mychoice');
-			cardSinglePulseOn(allElem[computerPlay]);
 		}
 		const challenge = `${playerSelection}${computerSelection}`;
 		console.log(`game is ${challenge}`);
@@ -119,8 +118,8 @@ function playRound(playerSelection) {
 			score += 'L';
 		}
 		if (score.length >= 5) { calcWinner(score); }
-	// }, outputLength);
-	}, 100);
+	}, outputLength);
+	// }, 100);
 }
 function calcWinner(score) {
 	removeElemListeners();
