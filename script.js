@@ -93,10 +93,11 @@ addCardsListeners();
 function playRound(playerSelection) {
 	let outputLength = cardAnimationRoulette(1);
 	console.log(playerSelection);
+	allElem[playerSelection].classList.add('mychoice');
 	setTimeout( function () {
 		const computerSelection = computerPlay();
 		if (playerSelection === computerSelection) {
-			allElem[computerSelection].classList.remove('mychoice')
+			allElem[computerSelection].classList.remove('mychoice');
 			allElem[computerSelection].classList.add('samechoice');
 		} else {
 			allElem[computerSelection].classList.add('enemychoice');
@@ -119,7 +120,6 @@ function playRound(playerSelection) {
 		}
 		if (score.length >= 5) { calcWinner(score); }
 	}, outputLength);
-	// }, 100);
 }
 function calcWinner(score) {
 	removeElemListeners();

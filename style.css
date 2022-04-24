@@ -61,12 +61,6 @@ h2 {
     padding: 50px 30px;
 }
 
-.rock,
-.scissors,
-.paper {
-    flex: 1;
-}
-
 .rock {
     height: 160px;
     padding-top: 20px;
