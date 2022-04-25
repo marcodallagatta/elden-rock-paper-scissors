@@ -123,11 +123,12 @@ footer {
     color: white;
     text-align: center;
     padding: 20px 0;
+    font-size: .8em;
 }
-footer a {
+footer a,
+footer p {
     text-decoration: none;
     color: #808060;
-    font-size: .8em;
 }
 
 .loseMessage {
